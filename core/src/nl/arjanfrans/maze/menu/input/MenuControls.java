@@ -17,7 +17,6 @@ import nl.arjanfrans.maze.menu.view.MenuItem;
 
 public class MenuControls {
     protected Menu menu;
-    protected ArrayMap<String, MenuItem> menuItems = new ArrayMap<String, MenuItem>();
 
     public MenuControls(Menu menu) {
         this.menu = menu;
@@ -35,11 +34,6 @@ public class MenuControls {
             this.menu.select();
         }
     }
-
-    public void addMenuItem(String name, MenuItem item) {
-        this.menuItems.put(name, item);
-    }
-
 
 
 

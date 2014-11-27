@@ -6,6 +6,7 @@ import nl.arjanfrans.maze.debug.D;
 import nl.arjanfrans.maze.game.entities.*;
 import nl.arjanfrans.maze.game.events.TimeLimitReached;
 import nl.arjanfrans.maze.game.map.Map;
+import nl.arjanfrans.maze.game.systems.input.GlobalGameInput;
 import nl.arjanfrans.maze.utils.Timer;
 
 import java.util.Iterator;
@@ -31,7 +32,11 @@ public class World {
 
     public World(MasterMaze game) {
         this.game = game;
+        GlobalGameInput globalInput = new GlobalGameInput(game);
+        controllables.add(globalInput);
         this.generator = new WorldGenerator(this);
+
+
         this.initialize();
     }
 
@@ -46,6 +51,7 @@ public class World {
 
     public void update() {
         if(!stop && timer.isFinished()) {
+            System.out.println("test");
             new TimeLimitReached(this.game);
         }
     }

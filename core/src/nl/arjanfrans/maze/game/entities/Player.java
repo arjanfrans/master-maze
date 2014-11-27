@@ -14,9 +14,11 @@ public abstract class Player extends Character implements Controllable {
     protected Direction keyPressed = null;
     protected boolean moving = false;
     protected boolean inputEnabled = true;
+    private Map map;
 
-    public Player(float x, float y, float width, float height) {
+    public Player(float x, float y, float width, float height, Map map) {
         super(x, y, width, height);
+        this.map = map;
     }
 
     public void setInputEnabled(boolean enabled) {
@@ -28,7 +30,7 @@ public abstract class Player extends Character implements Controllable {
     }
 
     @Override
-    public void input(Map map) {
+    public void input() {
         if(GameKeys.isDown(GameKeys.RIGHT)) {
             keyPressed = Direction.RIGHT;
         } else if(GameKeys.isDown(GameKeys.LEFT)) {

@@ -20,7 +20,7 @@ import nl.arjanfrans.maze.game.systems.view.HudRenderer;
 import nl.arjanfrans.maze.game.systems.view.WorldRenderer;
 
 
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, InputScreen {
     protected final MasterMaze game;
 
     protected WorldInput input;
@@ -48,7 +48,6 @@ public class GameScreen implements Screen {
         this.events = new EventHandler(this.world);
         dt = 1/75f; // Logic updates approx. @ 75 hz
 
-        Gdx.input.setInputProcessor(new InputMultiplexer(new GameInput(), this.controllerOverlay.getStage()));
     }
 
     @Override
@@ -132,4 +131,8 @@ public class GameScreen implements Screen {
         this.renderer.dispose();
     }
 
+    @Override
+    public InputMultiplexer getInputMultiplexer() {
+        return new InputMultiplexer(new GameInput(), this.controllerOverlay.getStage());
+    }
 }

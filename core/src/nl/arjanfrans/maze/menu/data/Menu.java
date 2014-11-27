@@ -1,44 +1,44 @@
 package nl.arjanfrans.maze.menu.data;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.ArrayMap;
 import nl.arjanfrans.maze.Config;
 import nl.arjanfrans.maze.MasterMaze;
+import nl.arjanfrans.maze.debug.D;
+import nl.arjanfrans.maze.menu.actions.MenuAction;
 import nl.arjanfrans.maze.menu.input.MenuControls;
 import nl.arjanfrans.maze.screens.GameScreen;
+import nl.arjanfrans.maze.screens.HighscoreScreen;
 
-public class Menu {
+public abstract class Menu {
     private int currentItem;
-    private String[] menuItems;
+    private ArrayMap<String, MenuAction> menuItems = null;
     private String title;
     private MasterMaze game;
+    private MenuControls controls;
 
     public Menu(MasterMaze game) {
+        this.controls = new MenuControls(this);
         this.game = game;
-        this.menuItems = new String[]{"Play", "Highscores", "Quit"};
         this.title = Config.TITLE;
+    }
 
+    public void setMenuItems(ArrayMap<String, MenuAction> menuItems) {
+        this.menuItems = menuItems;
     }
 
     public void moveUp() {
-        if(this.currentItem > 0) this.currentItem--;
+        if (this.currentItem > 0) this.currentItem--;
     }
 
     public void moveDown() {
-        if(this.currentItem < menuItems.length - 1) this.currentItem++;
+        if (this.currentItem < menuItems.size) this.currentItem++;
     }
 
     public void select() {
-        if(this.currentItem == 0) {
-            this.game.setScreen(new GameScreen(this.game));
-        }
-        if(this.currentItem == 1) {
-            //TODO create highscore system
-        }
-        if(this.currentItem == 2) {
-            Gdx.app.exit();
-        }
+        menuItems.getValueAt(currentItem).act();
     }
 
     public void setCurrentItem(int item) {
@@ -53,9 +53,20 @@ public class Menu {
         return this.title;
     }
 
-    public String[] getMenuItems() {
+    public ArrayMap<String, MenuAction> getMenuItems() {
         return this.menuItems;
     }
 
+    public String[] getMenuItemKeys() {
+        if(menuItems == null) return new String[0];
+        String[] items = new String[menuItems.size];
+        for(int i = 0; i < menuItems.size; i++) {
+            items[i] = menuItems.getKeyAt(i);
+        }
+        return items;
+    }
 
+    public MenuControls getControls() {
+        return controls;
+    }
 }

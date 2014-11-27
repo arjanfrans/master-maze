@@ -25,7 +25,6 @@ public class WorldGenerator {
 
     public void generate() {
         this.loadAssets();
-        this.createPlayer();
         this.createMap();
         this.startWorld();
     }
@@ -40,14 +39,15 @@ public class WorldGenerator {
         Assets.load();
     }
 
-    protected void createPlayer() {
-        Arjan player = new Arjan(128f, 32f);
+    protected void createPlayer(Map map) {
+        Arjan player = new Arjan(128f, 32f, map);
         player.setInputEnabled(false);
         this.world.addEntity(player);
     }
 
-    protected void createMap() {
+    protected Map createMap() {
         Map map = new Map();
+        createPlayer(map);
         Layer grass = new Layer("grass", 16, 16, 32, 32);
         this.generateGrassLayer(grass);
         map.addLayer("grass", grass);
@@ -56,6 +56,7 @@ public class WorldGenerator {
         for(Tile tile : map.getAllTiles()) {
             this.world.addEntity(tile);
         }
+        return map;
     }
 
     //TODO create a real map generator

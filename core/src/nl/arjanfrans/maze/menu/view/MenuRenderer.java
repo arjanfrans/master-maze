@@ -29,12 +29,11 @@ public class MenuRenderer extends AbstractRenderer{
     protected Skin skin;
     protected MenuControls controls;
 
-    public MenuRenderer(Menu menu, MenuControls controls) {
+    public MenuRenderer(Menu menu) {
         this.menu = menu;
-        this.controls = controls;
+        this.controls = menu.getControls();
         this.skin = new Skin();
         this.stage = new Stage();
-        Gdx.input.setInputProcessor(new InputMultiplexer(stage, new GameInput()));
         this.createTable();
     }
 
@@ -47,7 +46,7 @@ public class MenuRenderer extends AbstractRenderer{
     }
 
     protected void createMenu() {
-        String[] items = menu.getMenuItems();
+        String[] items = menu.getMenuItemKeys();
         this.items = new MenuItem[items.length];
         for(int i = 0; i < items.length; i++) {
             table.row();
@@ -71,7 +70,6 @@ public class MenuRenderer extends AbstractRenderer{
         updateItems();
         stage.act();
         stage.draw();
-//        if(Config.DEBUG) Table.drawDebug(stage); // draw any enabled debug lines
 
         this.batch.end();
     }
@@ -81,6 +79,10 @@ public class MenuRenderer extends AbstractRenderer{
             if(menu.getCurrentItem() == i) items[i].getItem().setChecked(true);
             else items[i].getItem().setChecked(false);
         }
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 
 }

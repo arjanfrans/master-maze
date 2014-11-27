@@ -4,7 +4,7 @@ import nl.arjanfrans.maze.game.map.Map;
 
 public interface Controllable {
 
-    public void input(Map map);
+    public void input();
 
     public boolean isInputEnabled();
 }

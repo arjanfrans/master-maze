@@ -39,6 +39,9 @@ public class GameInput implements InputProcessor {
         if(keycode == Input.Keys.ENTER) {
             GameKeys.setKey(GameKeys.ENTER, true);
         }
+        if(keycode == Input.Keys.ESCAPE) {
+            GameKeys.setKey(GameKeys.ESCAPE, true);
+        }
         return true;
     }
 
@@ -66,6 +69,9 @@ public class GameInput implements InputProcessor {
         }
         if(keycode == Input.Keys.ENTER) {
             GameKeys.setKey(GameKeys.ENTER, false);
+        }
+        if(keycode == Input.Keys.ESCAPE) {
+            GameKeys.setKey(GameKeys.ESCAPE, false);
         }
         return true;
     }
